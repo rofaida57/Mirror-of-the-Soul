@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرآة الروح</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- خط يشبه الكتابة اليدوية -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- شاشة البداية: التشغيل -->
+    <div id="start-screen" class="screen active">
+        <div id="activation-symbol"></div>
+        <p id="start-hint">...استمر في النظر</p>
+    </div>
+
+    <!-- الشاشة الرئيسية: نسيج الذكريات -->
+    <div id="main-game-screen" class="screen">
+        <canvas id="memory-canvas"></canvas>
+        <div id="mirror"></div>
+        <div id="memory-text"></div>
+        <div id="found-memories-counter">الذكريات المكتشفة: <span>0</span> / 5</div>
+    </div>
+
+    <!-- الشاشة النهائية: تركيب الروح -->
+    <div id="final-puzzle-screen" class="screen">
+        <div id="assembly-mirror"></div>
+        <div id="assembly-area"></div>
+        <div id="final-message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

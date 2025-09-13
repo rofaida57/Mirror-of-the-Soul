@@ -1,0 +1,233 @@
+/* --- إعدادات عامة --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none; /* إخفاء المؤشر الافتراضي */
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #e0d5c7;
+    font-family: 'Ma Shan Zheng', cursive; /* خط يشبه اليدوي */
+    overflow: hidden; /* منع ظهور أشرطة التمرير */
+    user-select: none; /* منع تحديد النصوص */
+}
+
+/* --- مؤشر مخصص --- */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(200, 180, 255, 0.8), transparent);
+    border-radius: 50%;
+    pointer-events: none; /* لا يمنع النقر تحته */
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: background 0.2s ease;
+}
+body:active::after {
+    background: radial-gradient(circle, rgba(255, 200, 150, 1), transparent);
+}
+
+/* --- الشاشات --- */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease, visibility 1.5s ease;
+}
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- شاشة البداية --- */
+#start-screen {
+    flex-direction: column;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+}
+
+#activation-symbol {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #4a5568;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.5s ease;
+}
+#activation-symbol::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #4a5568;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+#activation-symbol.activating {
+    border-color: #a0aec0;
+    box-shadow: 0 0 20px #a0aec0, inset 0 0 20px #a0aec0;
+}
+#activation-symbol.activated {
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 0 20px #a0aec0, inset 0 0 20px #a0aec0; }
+    to { box-shadow: 0 0 40px #e2e8f0, inset 0 0 40px #e2e8f0; }
+}
+
+#start-hint {
+    margin-top: 40px;
+    font-size: 1.5em;
+    opacity: 0.5;
+    transition: opacity 0.5s ease;
+}
+
+/* --- الشاشة الرئيسية --- */
+#main-game-screen {
+    background-color: #0f0f1e;
+}
+
+#memory-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#mirror {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30, 30, 50, 0.7), rgba(10, 10, 20, 0.9));
+    border: 2px solid #2d3748;
+    box-shadow: 0 0 30px rgba(100, 100, 200, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transition: all 0.8s ease;
+}
+#mirror.showing-memory {
+    background-size: cover;
+    background-position: center;
+    border-color: #805ad5;
+    box-shadow: 0 0 50px rgba(160, 100, 255, 0.8), inset 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+#memory-text {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2em;
+    text-align: center;
+    color: #e2e8f0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    text-shadow: 0 0 10px rgba(200, 200, 255, 0.5);
+    max-width: 80%;
+}
+
+#found-memories-counter {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.2em;
+    opacity: 0.7;
+}
+
+/* --- الشاشة النهائية --- */
+#final-puzzle-screen {
+    background: radial-gradient(ellipse at center, #16213e 0%, #0f0f1e 100%);
+    flex-direction: column;
+}
+
+#assembly-mirror {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(50, 50, 80, 0.8), rgba(20, 20, 40, 0.9));
+    border: 3px solid #4a5568;
+    box-shadow: 0 0 40px rgba(100, 100, 200, 0.4);
+    margin-bottom: 50px;
+    position: relative;
+    transition: all 0.5s ease;
+}
+#assembly-mirror.complete {
+    border-color: #f6e05e;
+    box-shadow: 0 0 80px rgba(255, 220, 100, 0.9);
+}
+
+#assembly-area {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.memory-orb {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #9f7aea, #553c9a);
+    box-shadow: 0 0 15px rgba(159, 122, 234, 0.6);
+    position: relative;
+    transition: transform 0.2s ease;
+    z-index: 10;
+}
+.memory-orb:hover {
+    transform: scale(1.1);
+}
+.memory-orb.dragging {
+    opacity: 0.8;
+    transform: scale(1.2);
+    z-index: 100;
+}
+.memory-orb.placed {
+    position: absolute;
+    transform: scale(0.8);
+    box-shadow: 0 0 25px rgba(159, 122, 234, 0.9);
+}
+
+.orb-slot {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border: 2px dashed rgba(160, 174, 192, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+.orb-slot.filled {
+    border-style: solid;
+    border-color: #9f7aea;
+}
+
+#final-message {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5em;
+    text-align: center;
+    color: #f6e05e;
+    opacity: 0;
+    transition: opacity 2s ease;
+    text-shadow: 0 0 20px rgba(255, 220, 100, 0.8);
+}

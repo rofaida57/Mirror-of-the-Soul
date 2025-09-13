@@ -5,18 +5,16 @@
     box-sizing: border-box;
     cursor: none; /* إخفاء المؤشر الافتراضي */
 }
-
 body {
     background-color: #0a0a0a;
     color: #e0d5c7;
-    font-family: 'Ma Shan Zheng', cursive; /* خط يشبه اليدوي */
-    overflow: hidden; /* منع ظهور أشرطة التمرير */
-    user-select: none; /* منع تحديد النصوص */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    user-select: none;
 }
 
-/* --- مؤشر مخصص --- */
-body::after {
-    content: '';
+/* --- مؤشر مخصص (عنصر حقيقي) --- */
+#custom-cursor {
     position: fixed;
     top: 0;
     left: 0;
@@ -24,13 +22,18 @@ body::after {
     height: 20px;
     background: radial-gradient(circle, rgba(200, 180, 255, 0.8), transparent);
     border-radius: 50%;
-    pointer-events: none; /* لا يمنع النقر تحته */
-    z-index: 9999;
+    pointer-events: none;
+    z-index: 10000;
     transform: translate(-50%, -50%);
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
-body:active::after {
+#custom-cursor.hovering {
+    background: radial-gradient(circle, rgba(255, 220, 150, 1), transparent);
+    transform: translate(-50%, -50%) scale(1.5);
+}
+body:active #custom-cursor {
     background: radial-gradient(circle, rgba(255, 200, 150, 1), transparent);
+    transform: translate(-50%, -50%) scale(1.2);
 }
 
 /* --- الشاشات --- */
@@ -57,7 +60,6 @@ body:active::after {
     flex-direction: column;
     background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
 }
-
 #activation-symbol {
     width: 120px;
     height: 120px;
@@ -84,24 +86,45 @@ body:active::after {
 #activation-symbol.activated {
     animation: pulse 1s infinite alternate;
 }
-
 @keyframes pulse {
     from { box-shadow: 0 0 20px #a0aec0, inset 0 0 20px #a0aec0; }
     to { box-shadow: 0 0 40px #e2e8f0, inset 0 0 40px #e2e8f0; }
 }
-
 #start-hint {
     margin-top: 40px;
     font-size: 1.5em;
     opacity: 0.5;
     transition: opacity 0.5s ease;
 }
+#intro-text {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+#quote {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1em;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
 
 /* --- الشاشة الرئيسية --- */
 #main-game-screen {
     background-color: #0f0f1e;
 }
-
 #memory-canvas {
     position: absolute;
     top: 0;
@@ -109,7 +132,6 @@ body:active::after {
     width: 100%;
     height: 100%;
 }
-
 #mirror {
     position: absolute;
     top: 50%;
@@ -130,7 +152,6 @@ body:active::after {
     border-color: #805ad5;
     box-shadow: 0 0 50px rgba(160, 100, 255, 0.8), inset 0 0 50px rgba(0, 0, 0, 0.5);
 }
-
 #memory-text {
     position: absolute;
     bottom: 10%;
@@ -144,7 +165,6 @@ body:active::after {
     text-shadow: 0 0 10px rgba(200, 200, 255, 0.5);
     max-width: 80%;
 }
-
 #found-memories-counter {
     position: absolute;
     top: 20px;
@@ -152,13 +172,21 @@ body:active::after {
     font-size: 1.2em;
     opacity: 0.7;
 }
+#game-hint {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1em;
+    opacity: 0.5;
+    max-width: 300px;
+    text-align: left;
+}
 
 /* --- الشاشة النهائية --- */
 #final-puzzle-screen {
     background: radial-gradient(ellipse at center, #16213e 0%, #0f0f1e 100%);
     flex-direction: column;
 }
-
 #assembly-mirror {
     width: 300px;
     height: 300px;
@@ -174,14 +202,12 @@ body:active::after {
     border-color: #f6e05e;
     box-shadow: 0 0 80px rgba(255, 220, 100, 0.9);
 }
-
 #assembly-area {
     display: flex;
     justify-content: center;
     gap: 30px;
     margin-top: 20px;
 }
-
 .memory-orb {
     width: 60px;
     height: 60px;
@@ -202,10 +228,9 @@ body:active::after {
 }
 .memory-orb.placed {
     position: absolute;
-    transform: scale(0.8);
+    transform: translate(-50%, -50%) scale(0.8);
     box-shadow: 0 0 25px rgba(159, 122, 234, 0.9);
 }
-
 .orb-slot {
     position: absolute;
     width: 70px;
@@ -218,7 +243,6 @@ body:active::after {
     border-style: solid;
     border-color: #9f7aea;
 }
-
 #final-message {
     position: absolute;
     top: 20px;
@@ -230,4 +254,59 @@ body:active::after {
     opacity: 0;
     transition: opacity 2s ease;
     text-shadow: 0 0 20px rgba(255, 220, 100, 0.8);
+}
+#puzzle-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    opacity: 0.7;
+    text-align: center;
+    max-width: 80%;
+}
+
+/* --- رسالة الانتقال --- */
+#transition-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    text-align: center;
+    color: #e2e8f0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    text-shadow: 0 0 15px rgba(200, 200, 255, 0.7);
+    max-width: 80%;
+    z-index: 1000;
+}
+
+/* --- خيارات الحوار --- */
+.dialogue-options {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 1000;
+}
+.dialogue-option {
+    background: rgba(30, 30, 50, 0.7);
+    border: 1px solid rgba(160, 100, 255, 0.5);
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+.dialogue-option:hover {
+    background: rgba(60, 60, 100, 0.8);
+    border-color: rgba(160, 100, 255, 0.9);
+    transform: translateX(5px);
 }

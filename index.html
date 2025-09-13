@@ -3,34 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مرآة الروح</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- خط يشبه الكتابة اليدوية -->
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <title>مرآة الروح - رحلة الوعي</title>
+    <style>
+        /* هنا ستكون أكواد CSS */
+    </style>
 </head>
 <body>
-
+    <!-- مؤشر الفأرة المخصص -->
+    <div id="custom-cursor"></div>
+    
     <!-- شاشة البداية: التشغيل -->
     <div id="start-screen" class="screen active">
         <div id="activation-symbol"></div>
-        <p id="start-hint">...استمر في النظر</p>
+        <p id="start-hint">...استمر في النقر</p>
+        <div id="quote">"الذاكرة هي مرآة الروح، وفي كسورها نرى حقيقتنا"</div>
+        <div id="intro-text">في أعماق الوعي، حيث تلتقي الذكريات بالأحلام، تبدأ رحلة البحث عن الحقيقة المفقودة. ما هو حقيقي وما هو وهم؟ فقط الذكريات تمتلك الإجابة...</div>
     </div>
-
+    
     <!-- الشاشة الرئيسية: نسيج الذكريات -->
     <div id="main-game-screen" class="screen">
         <canvas id="memory-canvas"></canvas>
         <div id="mirror"></div>
         <div id="memory-text"></div>
-        <div id="found-memories-counter">الذكريات المكتشفة: <span>0</span> / 5</div>
+        <div id="found-memories-counter">الذكريات المكتشفة: <span>0</span> / 9</div>
+        <div id="game-hint">ابحث عن النقاط المتوهجة واضغط عليها لاستعادة الذكريات المفقودة</div>
+        
+        <!-- خيارات الحوار -->
+        <div id="dialogue-options" class="dialogue-options">
+            <div class="dialogue-option" data-choice="1">مواجهة الحقيقة</div>
+            <div class="dialogue-option" data-choice="2">الهروب من الماضي</div>
+            <div class="dialogue-option" data-choice="3">قبول الوهم</div>
+        </div>
     </div>
-
+    
     <!-- الشاشة النهائية: تركيب الروح -->
     <div id="final-puzzle-screen" class="screen">
         <div id="assembly-mirror"></div>
         <div id="assembly-area"></div>
         <div id="final-message"></div>
+        <div id="puzzle-hint">اسحب الذكريات وركبها بالترتيب الصحيح لاستكمال مرآة الروح</div>
     </div>
+    
+    <!-- رسالة الانتقال بين الشاشات -->
+    <div id="transition-message"></div>
 
-    <script src="script.js"></script>
+    <script>
+        // هنا سيكون كود JavaScript
+    </script>
 </body>
 </html>
